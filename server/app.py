@@ -39,10 +39,9 @@ class CheckSession(Resource):
 class Login(Resource):
     def post(self):
         username = request.get_json()['username']
-        password = request.get_json()['password']
         user = User.query.filter(User.username == username).first()
 
-        if user.authenticate(password):
+        if user:
             session['user_id'] = user.id
             return make_response(jsonify(user.to_dict()), 200)
 
